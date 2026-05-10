@@ -430,15 +430,33 @@ DASHBOARD_HTML = """<!DOCTYPE html>
   *{box-sizing:border-box;margin:0;padding:0;}
   ::-webkit-scrollbar{width:5px;background:#000;}
   ::-webkit-scrollbar-thumb{background:#444;border-radius:3px;}
-  body{background:#020204 url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='.012'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
-    color:#e8e0c8;font-family:'Rajdhani',sans-serif;min-height:100vh;overflow-x:hidden;}
+  body{
+    color:#e8e0c8;font-family:'Rajdhani',sans-serif;min-height:100vh;overflow-x:hidden;
+    background-color:#1a0008;
+    background-image:
+      /* Ceiling spotlight — warm amber glow from above center */
+      radial-gradient(ellipse 80% 40% at 50% -5%, rgba(255,160,30,.18) 0%, transparent 70%),
+      /* Left wall glow */
+      radial-gradient(ellipse 35% 80% at 0% 50%, rgba(120,0,30,.22) 0%, transparent 60%),
+      /* Right wall glow */
+      radial-gradient(ellipse 35% 80% at 100% 50%, rgba(120,0,30,.22) 0%, transparent 60%),
+      /* Deep floor mid-glow (machines area) */
+      radial-gradient(ellipse 70% 50% at 50% 60%, rgba(80,0,20,.35) 0%, transparent 70%),
+      /* Casino carpet — deep crimson/burgundy diagonal diamond pattern */
+      repeating-linear-gradient(45deg,  rgba(100,0,20,.28) 0px, rgba(100,0,20,.28) 1px, transparent 1px, transparent 18px),
+      repeating-linear-gradient(-45deg, rgba(100,0,20,.28) 0px, rgba(100,0,20,.28) 1px, transparent 1px, transparent 18px),
+      /* Carpet base — deep burgundy velvet */
+      linear-gradient(180deg, #0e0004 0%, #1c0008 25%, #160006 55%, #0e0004 100%);
+  }
+  /* Subtle scanline shimmer over entire page for casino depth */
+  body::before{
+    content:'';
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.06) 3px, rgba(0,0,0,.06) 4px),
+      radial-gradient(ellipse 120% 60% at 50% 0%, rgba(255,140,20,.07) 0%, transparent 60%);
+  }
 
-  .mbar{background:linear-gradient(90deg,#1a0005,#3d0010,#1a0005);border-bottom:3px solid var(--nr);
-    box-shadow:0 0 30px var(--nr);padding:7px 0;overflow:hidden;white-space:nowrap;position:relative;z-index:10;}
-  .minner{display:inline-block;animation:mar 32s linear infinite;
-    font-family:'Oswald',sans-serif;font-size:1rem;letter-spacing:5px;
-    color:var(--ngold);text-shadow:0 0 10px var(--gold),0 0 30px var(--gold2);}
-  @keyframes mar{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
 
   header{text-align:center;padding:22px 16px;
     background:linear-gradient(180deg,#130026,#08001a 70%,transparent);position:relative;z-index:10;}
@@ -461,9 +479,11 @@ DASHBOARD_HTML = """<!DOCTYPE html>
     border:1px solid rgba(255,215,0,.3);border-radius:20px;padding:3px 14px;
     font-size:.72rem;color:var(--gold);letter-spacing:3px;font-family:'Cinzel',serif;}
 
-  .ndiv{height:4px;background:linear-gradient(90deg,var(--nr),var(--ngold),var(--ng),var(--nb),var(--np),var(--nr));
-    background-size:300% 100%;animation:rs 3s linear infinite;box-shadow:0 0 16px rgba(255,200,0,.5);position:relative;z-index:10;}
-  @keyframes rs{from{background-position:0%}to{background-position:300%}}
+  .ndiv{height:2px;background:linear-gradient(90deg,transparent,rgba(255,215,0,.15),rgba(255,215,0,.6),rgba(255,180,0,.8),rgba(255,215,0,.6),rgba(255,215,0,.15),transparent);
+    box-shadow:0 0 10px rgba(255,200,0,.3);position:relative;z-index:10;}
+  /* Corner vignette for immersion */
+  .casino-vignette{position:fixed;inset:0;pointer-events:none;z-index:1;
+    background:radial-gradient(ellipse 100% 100% at 50% 50%,transparent 45%,rgba(0,0,0,.55) 100%);}
 
   .live-bar{padding:14px 16px 10px;position:relative;z-index:10;}
   .live-title{font-family:'Cinzel',serif;font-size:.85rem;color:var(--ng);letter-spacing:3px;text-align:center;margin-bottom:9px;
@@ -478,11 +498,6 @@ DASHBOARD_HTML = """<!DOCTYPE html>
   .zc .zv{font-size:1.15rem;font-weight:700;color:var(--ng);font-family:'Oswald',sans-serif;text-shadow:0 0 8px #00ff5566;}
   .pln{text-align:center;color:#1a3020;font-size:.67rem;margin-top:5px;letter-spacing:1px;}
 
-  .ticker-wrap{background:rgba(0,0,0,.65);border-top:1px solid rgba(255,215,0,.1);
-    border-bottom:1px solid rgba(255,215,0,.1);padding:6px 0;overflow:hidden;white-space:nowrap;position:relative;z-index:10;}
-  .ticker-inner{display:inline-block;animation:tick 30s linear infinite;
-    font-family:'Oswald',sans-serif;font-size:.8rem;letter-spacing:3px;}
-  @keyframes tick{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
 
   /* ======= CASINO FLOOR ======= */
   .casino-floor{padding:20px 12px 30px;position:relative;z-index:10;}
@@ -494,8 +509,16 @@ DASHBOARD_HTML = """<!DOCTYPE html>
 
   /* MACHINE */
   .machine{border-radius:18px;margin-bottom:0;overflow:visible;position:relative;
-    width:340px;min-width:300px;flex-shrink:0;}
-  .m-sign{border-radius:14px 14px 0 0;padding:14px 20px;text-align:center;position:relative;overflow:hidden;border:3px solid;border-bottom:none;}
+    width:340px;min-width:300px;flex-shrink:0;padding:6px;box-sizing:border-box;}
+  /* Perimeter bulb container sits behind the card */
+  .m-border-lights{position:absolute;inset:0;border-radius:18px;pointer-events:none;z-index:0;}
+  .mbl{position:absolute;width:9px;height:9px;border-radius:50%;
+    box-shadow:0 0 6px 2px currentColor;}
+  @keyframes mblon{0%,100%{opacity:1;filter:brightness(2.5) drop-shadow(0 0 5px currentColor)}50%{opacity:.06;filter:brightness(.15)}}
+  @keyframes mblof{0%,100%{opacity:.06;filter:brightness(.15)}50%{opacity:1;filter:brightness(2.5) drop-shadow(0 0 5px currentColor)}}
+  /* Card content wrapper */
+  .m-card{position:relative;z-index:1;}
+  .m-sign{border-radius:12px 12px 0 0;padding:14px 20px;text-align:center;position:relative;overflow:hidden;border:3px solid;border-bottom:none;}
   .m-sign-name{font-family:'Cinzel',serif;font-size:1.3rem;letter-spacing:4px;text-shadow:0 0 12px currentColor;position:relative;}
   .m-sign-price{font-family:'Oswald',sans-serif;font-size:2.2rem;font-weight:700;letter-spacing:2px;
     text-shadow:0 0 18px currentColor;position:relative;animation:pp 1.8s ease infinite;}
@@ -503,13 +526,10 @@ DASHBOARD_HTML = """<!DOCTYPE html>
   .m-sign-pool{font-family:'Oswald',sans-serif;font-size:.85rem;letter-spacing:3px;opacity:.55;position:relative;margin-top:2px;}
   .m-bulbs{display:flex;gap:4px;padding:7px 14px;justify-content:center;flex-wrap:wrap;background:rgba(0,0,0,.45);border-left:3px solid;border-right:3px solid;}
   .mb{width:10px;height:10px;border-radius:50%;box-shadow:0 0 8px currentColor,0 0 16px currentColor;}
-  /* Alternating flash: odd on when even off, swap at 50% */
-  .mb:nth-child(odd){animation:mbo .55s ease infinite;}
-  .mb:nth-child(even){animation:mbe .55s ease infinite;}
-  @keyframes mbo{0%,49%{opacity:1;filter:brightness(1.8)}50%,100%{opacity:.06;filter:brightness(.3)}}
-  @keyframes mbe{0%,49%{opacity:.06;filter:brightness(.3)}50%,100%{opacity:1;filter:brightness(1.8)}}
+  @keyframes mbon{0%,100%{opacity:1;filter:brightness(2.2) drop-shadow(0 0 4px currentColor)}50%{opacity:.05;filter:brightness(.2)}}
+  @keyframes mbof{0%,100%{opacity:.05;filter:brightness(.2)}50%{opacity:1;filter:brightness(2.2) drop-shadow(0 0 4px currentColor)}}
 
-  .m-body{border:3px solid;border-top:none;border-radius:0 0 16px 16px;
+  .m-body{border:3px solid;border-top:none;border-radius:0 0 12px 12px;
     background:radial-gradient(ellipse at 50% 20%,#0d3d1a,#061a0c 55%,#030d06);
     position:relative;overflow:hidden;}
   .m-body::before{content:'';position:absolute;inset:0;pointer-events:none;
@@ -517,23 +537,32 @@ DASHBOARD_HTML = """<!DOCTYPE html>
                repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(0,0,0,.04) 28px,rgba(0,0,0,.04) 29px);}
   .m-inner{padding:16px 18px;position:relative;z-index:1;}
 
-  /* REEL DISPLAY */
-  .reel-box{background:#000;border-radius:12px;border:3px solid rgba(255,215,0,.2);
-    padding:12px;margin-bottom:14px;position:relative;overflow:hidden;
+  /* REEL DISPLAY — 3 visible rows */
+  .reel-wrap{display:flex;align-items:stretch;gap:4px;margin-bottom:14px;}
+  .reel-lines-col{display:flex;flex-direction:column;justify-content:space-around;width:18px;flex-shrink:0;}
+  .rl-num{font-size:.55rem;font-family:'Oswald',sans-serif;color:rgba(255,215,0,.25);text-align:center;
+    line-height:80px;transition:color .2s,text-shadow .2s;}
+  .rl-num.active{color:#FFD700;text-shadow:0 0 8px #FFD700;}
+  .reel-box{background:#000;border-radius:12px;border:3px solid rgba(255,215,0,.2);flex:1;
+    padding:8px 8px;position:relative;overflow:hidden;
     box-shadow:inset 0 0 40px rgba(0,0,0,.95),0 0 20px rgba(0,0,0,.5);}
   .reel-box::before{content:'';position:absolute;inset:0;
-    background:linear-gradient(180deg,rgba(0,0,0,.7) 0%,transparent 20%,transparent 80%,rgba(0,0,0,.7) 100%);
+    background:linear-gradient(180deg,rgba(0,0,0,.75) 0%,transparent 28%,transparent 72%,rgba(0,0,0,.75) 100%);
     pointer-events:none;z-index:3;}
-  .reel-box::after{content:'';position:absolute;left:10px;right:10px;top:50%;height:3px;
+  /* Middle-row win line highlight */
+  .reel-box::after{content:'';position:absolute;left:6px;right:6px;
+    top:calc(50% - 1px);height:2px;
     background:linear-gradient(90deg,transparent,var(--gold),transparent);
-    box-shadow:0 0 12px var(--gold);transform:translateY(-50%);pointer-events:none;z-index:4;}
-  .reel-row{display:flex;justify-content:center;gap:4px;align-items:stretch;}
-  .reel{width:64px;height:80px;overflow:hidden;position:relative;
+    box-shadow:0 0 10px var(--gold);pointer-events:none;z-index:4;}
+  .reel-row{display:flex;justify-content:center;gap:3px;align-items:stretch;width:100%;}
+  /* Each reel: flex:1 so all reels share width equally regardless of reel count */
+  .reel{flex:1;min-width:0;height:240px;overflow:hidden;position:relative;
     background:#0a0a0a;border:1px solid rgba(255,255,255,.06);border-radius:6px;}
   .reel-strip{position:absolute;top:0;left:0;width:100%;transition:none;}
   .reel-cell{height:80px;display:flex;align-items:center;justify-content:center;
-    font-size:2.2rem;user-select:none;}
-  .reel-sep{width:3px;background:rgba(255,215,0,.1);border-radius:2px;align-self:stretch;}
+    font-size:1.6rem;user-select:none;}
+  .reel-cell:not(:last-child){border-bottom:1px solid rgba(255,255,255,.04);}
+  .reel-sep{display:none;} /* removed — gap handles spacing */
 
 
   .play-area{text-align:center;margin:14px 0;}
@@ -570,6 +599,69 @@ DASHBOARD_HTML = """<!DOCTYPE html>
   .rw-amt{font-family:'Oswald',sans-serif;}
   .rw-time{color:rgba(255,255,255,.2);font-size:.6rem;margin-left:auto;}
 
+  /* WALLET BAR */
+  .wallet-bar{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
+    background:rgba(0,0,0,.55);border:1px solid rgba(255,215,0,.18);border-radius:12px;
+    padding:10px 20px;margin:0 12px 18px;position:relative;z-index:10;}
+  .wb-label{font-family:'Cinzel',serif;font-size:.75rem;color:rgba(255,215,0,.5);letter-spacing:3px;}
+  .wb-amt{font-family:'Oswald',sans-serif;font-size:1.6rem;color:#FFD700;font-weight:700;
+    text-shadow:0 0 14px rgba(255,215,0,.5);min-width:80px;text-align:center;}
+  .wb-btn{padding:6px 16px;border-radius:6px;border:1px solid rgba(255,215,0,.3);background:rgba(255,215,0,.08);
+    color:#FFD700;font-family:'Oswald',sans-serif;font-size:.78rem;letter-spacing:2px;cursor:pointer;transition:all .15s;}
+  .wb-btn:hover{background:rgba(255,215,0,.18);border-color:#FFD700;}
+  .wb-sep{width:1px;height:28px;background:rgba(255,215,0,.12);}
+  /* Per-machine transfer row */
+  .mach-wallet{display:flex;align-items:center;gap:6px;margin-top:6px;padding:6px 8px;
+    background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.06);border-radius:7px;}
+  .mw-lbl{font-size:.62rem;color:rgba(255,255,255,.3);letter-spacing:1px;flex:1;}
+  .mw-inp{width:60px;background:rgba(0,0,0,.5);border:1px solid rgba(255,215,0,.2);border-radius:5px;
+    color:#FFD700;font-family:'Oswald',sans-serif;font-size:.85rem;padding:3px 6px;text-align:center;outline:none;}
+  .mw-dep{padding:4px 10px;border-radius:5px;border:none;cursor:pointer;font-family:'Oswald',sans-serif;
+    font-size:.7rem;letter-spacing:1px;background:rgba(0,200,100,.15);color:#00ff88;border:1px solid rgba(0,255,100,.2);}
+  .mw-wit{padding:4px 10px;border-radius:5px;border:none;cursor:pointer;font-family:'Oswald',sans-serif;
+    font-size:.7rem;letter-spacing:1px;background:rgba(255,100,0,.12);color:#ff9944;border:1px solid rgba(255,150,0,.2);}
+  .mw-dep:hover{background:rgba(0,200,100,.28);}
+  .mw-wit:hover{background:rgba(255,100,0,.22);}
+  /* INFO BUTTON */
+  .btn-info{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,215,0,.4);
+    background:rgba(0,0,0,.6);color:#FFD700;font-size:.75rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    font-family:'Oswald',sans-serif;font-weight:700;z-index:10;transition:all .15s;}
+  .btn-info:hover{background:rgba(255,215,0,.18);border-color:#FFD700;box-shadow:0 0 8px rgba(255,215,0,.4);}
+  /* PAYTABLE MODAL */
+  .pt-modal{display:none;position:fixed;inset:0;z-index:30000;align-items:flex-start;justify-content:center;
+    background:rgba(0,0,0,.88);backdrop-filter:blur(6px);overflow-y:auto;padding:20px 10px;}
+  .pt-modal.open{display:flex;}
+  .pt-box{background:linear-gradient(160deg,#060e14,#0a1a0a);border:2px solid;border-radius:16px;
+    padding:24px 26px;max-width:520px;width:96%;box-shadow:0 0 60px rgba(0,0,0,.8);position:relative;}
+  .pt-close{position:absolute;top:10px;right:14px;background:none;border:none;color:rgba(255,255,255,.4);
+    font-size:1.2rem;cursor:pointer;transition:color .15s;}
+  .pt-close:hover{color:#fff;}
+  .pt-title{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:4px;text-align:center;margin-bottom:4px;}
+  .pt-sub{font-size:.7rem;color:rgba(255,255,255,.3);letter-spacing:2px;text-align:center;margin-bottom:16px;}
+  .pt-section{font-family:'Oswald',sans-serif;font-size:.7rem;letter-spacing:3px;
+    color:rgba(255,215,0,.5);margin:12px 0 6px;border-bottom:1px solid rgba(255,215,0,.1);padding-bottom:4px;}
+  .pt-table{width:100%;border-collapse:collapse;font-size:.78rem;}
+  .pt-table th{font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:2px;color:rgba(255,255,255,.3);
+    padding:4px 6px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);}
+  .pt-table td{padding:5px 6px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;}
+  .pt-table tr:last-child td{border-bottom:none;}
+  .pt-sym{font-size:1.1rem;}
+  .pt-name{color:rgba(255,255,255,.65);font-size:.75rem;}
+  .pt-mult{font-family:'Oswald',sans-serif;color:#FFD700;font-weight:700;}
+  .pt-rare{font-size:.65rem;padding:1px 6px;border-radius:10px;font-family:'Oswald',sans-serif;letter-spacing:1px;}
+  .pt-rare.c{background:rgba(0,150,50,.15);color:#00ff88;border:1px solid rgba(0,255,100,.15);}
+  .pt-rare.u{background:rgba(0,100,200,.15);color:#00ccff;border:1px solid rgba(0,180,255,.15);}
+  .pt-rare.r{background:rgba(150,0,200,.15);color:#dd00ff;border:1px solid rgba(180,0,255,.15);}
+  .pt-rare.l{background:rgba(255,180,0,.12);color:#FFD700;border:1px solid rgba(255,215,0,.25);}
+  .pt-winrate{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+  .pt-wr-item{flex:1;min-width:120px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.06);
+    border-radius:7px;padding:7px 10px;text-align:center;}
+  .pt-wr-val{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;color:#FFD700;}
+  .pt-wr-lbl{font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:1px;margin-top:2px;}
+  .pt-lines-info{background:rgba(0,0,0,.25);border-radius:7px;padding:8px 10px;margin-top:6px;font-size:.72rem;
+    color:rgba(255,255,255,.45);line-height:1.7;}
+  .pt-lines-info b{color:rgba(255,255,255,.8);}
+
   /* BUY PANEL */
   .buy-panel{background:rgba(0,0,0,.35);border:1px solid rgba(255,215,0,.1);border-radius:9px;padding:13px;}
   .bp-title{font-family:'Cinzel',serif;font-size:.78rem;color:var(--gold);letter-spacing:2px;text-align:center;margin-bottom:9px;}
@@ -602,6 +694,15 @@ DASHBOARD_HTML = """<!DOCTYPE html>
   @keyframes tp{from{transform:scale(0)}80%{transform:scale(1.1)}to{transform:scale(1)}}
   .tkt.g{color:#bb88ff;background:rgba(120,0,220,.07);border-color:rgba(150,40,255,.22);}
 
+  /* YETI CONTROLS */
+  .yeti-controls{display:flex;gap:6px;justify-content:space-between;margin-bottom:7px;background:rgba(0,0,0,.35);border-radius:7px;padding:7px 8px;}
+  .yc-group{display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;}
+  .yc-lbl{font-size:.55rem;letter-spacing:2px;color:rgba(255,255,255,.3);font-family:'Oswald',sans-serif;}
+  .yc-sel{background:#050e05;border:1px solid rgba(255,215,0,.2);border-radius:5px;color:#FFD700;
+    font-family:'Oswald',sans-serif;font-size:.85rem;padding:3px 5px;outline:none;text-align:center;width:100%;}
+  .yc-sel:focus{border-color:var(--gold);}
+  .yc-tot{font-family:'Oswald',sans-serif;font-size:.95rem;color:#FFD700;font-weight:700;margin-top:3px;}
+  .yeti-balance{text-align:center;font-size:.68rem;color:rgba(255,255,255,.25);margin-top:5px;letter-spacing:1px;}
   .win-overlay{position:fixed;inset:0;z-index:9999;display:none;background:rgba(0,0,0,.7);align-items:center;justify-content:center;}
   .win-overlay.show{display:flex;}
   .win-box{background:linear-gradient(135deg,#1c0035,#2e0055);border:3px solid var(--gold);border-radius:16px;
@@ -616,11 +717,17 @@ DASHBOARD_HTML = """<!DOCTYPE html>
     color:#1a0800;border:none;border-radius:7px;padding:8px 24px;cursor:pointer;
     font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:2px;font-weight:700;}
 
-  .charts-toggle{display:block;width:100%;padding:12px;position:relative;z-index:10;
-    background:rgba(255,215,0,.03);border:none;border-top:1px solid rgba(255,215,0,.06);border-bottom:1px solid rgba(255,215,0,.06);
-    color:rgba(255,215,0,.3);font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:2px;cursor:pointer;text-align:center;}
-  .charts-toggle:hover{background:rgba(255,215,0,.07);color:rgba(255,215,0,.6);}
-  .charts-body{display:none;padding:14px;position:relative;z-index:10;}
+  /* ---- MAIN TAB SYSTEM ---- */
+  .main-tabs{display:flex;gap:0;padding:0 16px;position:relative;z-index:10;margin-top:6px;}
+  .main-tab{padding:10px 24px;font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:3px;
+    color:rgba(255,215,0,.4);background:rgba(0,0,0,.4);border:1px solid rgba(255,215,0,.12);
+    border-bottom:none;border-radius:8px 8px 0 0;cursor:pointer;transition:all .15s;position:relative;top:1px;}
+  .main-tab:hover{color:rgba(255,215,0,.75);background:rgba(255,215,0,.06);}
+  .main-tab.active{color:#FFD700;background:#0a0003;border-color:rgba(255,215,0,.35);
+    text-shadow:0 0 12px rgba(255,215,0,.5);}
+  .main-tab-body{display:none;border-top:1px solid rgba(255,215,0,.2);position:relative;z-index:10;background:#0a0003;}
+  .main-tab-body.active{display:block;}
+  .charts-body{padding:16px;}
   .charts-body.open{display:block;}
   .cr{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
   @media(max-width:700px){.cr{grid-template-columns:1fr;}}
@@ -712,20 +819,47 @@ DASHBOARD_HTML = """<!DOCTYPE html>
     </div>
   </div>
 </div>
+<div class="casino-vignette"></div>
 <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
 <div id="flashOverlay" style="position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:0;transition:opacity .08s;"></div>
 <div class="win-overlay" id="winOverlay">
   <div class="win-box"><h2 id="winTitle">🎉 WINNER!</h2><p id="winMsg"></p>
     <button class="win-close" onclick="closeWin()">💰 COLLECT WINNINGS</button></div>
 </div>
-<button id="musicBtn" onclick="toggleMusic()" style="position:fixed;bottom:18px;right:18px;z-index:10000;background:rgba(0,0,0,.75);border:1px solid #FFD700;color:#FFD700;font-size:.75rem;padding:8px 14px;border-radius:20px;cursor:pointer;letter-spacing:2px;font-family:'Oswald',sans-serif;">🎵 MUSIC: OFF</button>
-<div class="mbar"><span class="minner">
-  🎰 GMAN'S CASINO MAXPLUS PRO v1.17 ★ 5 RAFFLE GAMES ★ BUY UP TO 10 TICKETS ★ GIFT TO FRIENDS ★ 1,000,000 TICKETS = DRAWING ★ MONTHLY ANNUITY ★ 25% TAX WITHHELD ★ ANTI-FRAUD HMAC TICKET SYSTEM ★ SEQUENTIAL NUMBERING 1–1,000,000 ★
-</span></div>
+<!-- MUSIC PANEL — fixed bottom-left, expands upward -->
+<div id="musicPanel" style="position:fixed;bottom:0;left:0;z-index:99999;font-family:'Oswald',sans-serif;">
+  <!-- Always-visible tab strip -->
+  <div onclick="toggleMusicPanel()" style="cursor:pointer;background:linear-gradient(90deg,#1a0008,#2a0010);border:1px solid rgba(255,215,0,.4);border-bottom:none;border-radius:10px 10px 0 0;padding:6px 16px;display:flex;align-items:center;gap:10px;">
+    <span style="color:#FFD700;font-size:.72rem;letter-spacing:3px;">🎵 MUSIC</span>
+    <span id="musicOnLbl" style="font-size:.62rem;color:rgba(255,215,0,.4);letter-spacing:2px;">OFF</span>
+    <span id="musicPanelArrow" style="color:rgba(255,215,0,.5);font-size:.7rem;margin-left:auto;">▲</span>
+  </div>
+  <!-- Expandable body -->
+  <div id="musicPanelBody" style="display:none;background:#0e0005;border:1px solid rgba(255,215,0,.4);border-top:none;border-radius:0 10px 0 0;padding:12px 16px;min-width:240px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+      <span style="color:rgba(255,215,0,.5);font-size:.65rem;letter-spacing:2px;flex:1;">PLAYBACK</span>
+      <button id="musicBtn" onclick="toggleMusic()" style="background:#1a0008;border:1px solid rgba(255,215,0,.35);color:#FFD700;font-size:.68rem;padding:4px 14px;border-radius:8px;cursor:pointer;letter-spacing:2px;font-family:'Oswald',sans-serif;min-width:52px;">OFF</button>
+    </div>
+    <div style="margin-bottom:10px;">
+      <div style="color:rgba(255,215,0,.45);font-size:.6rem;letter-spacing:2px;margin-bottom:5px;">TRACK</div>
+      <select id="musicTrack" onchange="switchTrack()" style="width:100%;background:#1a0008;border:1px solid rgba(255,215,0,.25);color:#FFD700;font-family:'Oswald',sans-serif;font-size:.73rem;padding:5px 8px;border-radius:6px;outline:none;cursor:pointer;">
+        <option value="lounge">🎷 Casino Lounge Jazz</option>
+        <option value="swing">🎺 Big Band Swing</option>
+        <option value="bossa">🌴 Bossa Nova Groove</option>
+        <option value="ambient">✨ Ambient Neon</option>
+      </select>
+    </div>
+    <div>
+      <div style="color:rgba(255,215,0,.45);font-size:.6rem;letter-spacing:2px;margin-bottom:5px;">VOLUME — <span id="musicVolLbl" style="color:#FFD700;">40%</span></div>
+      <input id="musicVol" type="range" min="0" max="100" value="40" oninput="setMusicVol(this.value)"
+        style="width:100%;accent-color:#FFD700;cursor:pointer;height:6px;">
+    </div>
+  </div>
+</div>
 <header>
   <div class="sign-frame">
     <h1>🎰 Gman's Casino<br>MaxPlusPro</h1>
-    <div class="sign-sub">GLOBAL MULTI-TIER RAFFLE · GENERATION 11</div>
+    <div class="sign-sub">GLOBAL MULTI-TIER RAFFLE · GENERATION 117</div>
     <div class="bulb-strip">
       <span class="blb"></span><span class="blb"></span><span class="blb"></span><span class="blb"></span>
       <span class="blb"></span><span class="blb"></span><span class="blb"></span><span class="blb"></span>
@@ -750,37 +884,66 @@ DASHBOARD_HTML = """<!DOCTYPE html>
   <div class="pln">⚠ Pre-launch. Live stats update when real tickets are purchased via API.</div>
 </div>
 <div class="ndiv"></div>
-<div class="ticker-wrap"><span class="ticker-inner" id="tickerInner"></span></div>
-<div class="casino-floor">
-  <div class="floor-title">🎰 THE <span>CASINO FLOOR</span> — 5 RAFFLE GAMES</div>
-  <div class="machine-row" id="floorArea"></div>
+<!-- PAYTABLE MODAL -->
+<div class="pt-modal" id="ptModal">
+  <div class="pt-box" id="ptBox">
+    <button class="pt-close" onclick="closePT()">✕</button>
+    <div class="pt-title" id="ptTitle">PAYTABLE</div>
+    <div class="pt-sub" id="ptSub"></div>
+    <div id="ptContent"></div>
+  </div>
 </div>
 <div class="ndiv"></div>
-<button class="charts-toggle" onclick="toggleCharts()">📊 View Projected Scale Simulation ▼</button>
-<div class="charts-body" id="chartsBody">
-  <div class="jp-strip" id="jackpotStrip"></div>
-  <div class="sg" id="statsGrid"></div>
-  <div class="sw"><input type="range" id="monthSlider" min="1" max="{{ months }}" value="{{ months }}"><div id="monthLabel">Month {{ months }}</div></div>
-  <div class="cr"><div class="cc"><h3>💰 Revenue vs Payouts</h3><canvas id="revChart"></canvas></div><div class="cc"><h3>🎟 Recipients</h3><canvas id="recipChart"></canvas></div></div>
-  <div class="cr"><div class="cc"><h3>📈 Cumulative</h3><canvas id="cumChart"></canvas></div><div class="cc"><h3>🎯 Tier Split</h3><canvas id="tierPieChart"></canvas></div></div>
+<!-- MAIN TAB BAR -->
+<div class="main-tabs">
+  <div class="main-tab active" id="tab-floor" onclick="switchMainTab('floor')">🎰 CASINO FLOOR</div>
+  <div class="main-tab" id="tab-charts" onclick="switchMainTab('charts')">📊 CHARTS &amp; DATA</div>
+  <div class="main-tab" id="tab-about" onclick="switchMainTab('about')">📖 ABOUT</div>
 </div>
-<div class="about-sec">
-  <div class="about-t">📖 About Gman's Casino MaxPlusPro v1.17</div>
-  <div class="ag">
-    <div class="ac"><h3 style="color:#FFD700;">🎯 What Is This?</h3><p>Global multi-tier raffle. Tickets sequentially numbered 1–1,000,000. HMAC-SHA256 anti-fraud. Drawing fires at exactly 1M tickets. Winners paid monthly annuity. 25% tax. Handles billions of micro-transactions globally.</p></div>
-    <div class="ac"><h3 style="color:#00ccff;">🎟 5 Games</h3><ul>
-      <li><span>$0.25</span> — 5 winners · $8,333/mo × 6mo · $250K pool</li>
-      <li><span>$4</span> — 80 winners · $8,333/mo × 6mo · $4M pool</li>
-      <li><span>$10</span> — 25 winners · $33,333/mo × 12mo · $10M pool</li>
-      <li><span>$100</span> — 200 winners · $83,333/mo × 12mo · $100M pool</li>
-      <li><span>$1,000</span> — 2,000 winners · $20,833/mo × 24mo · $1B pool</li></ul></div>
-    <div class="ac"><h3 style="color:#00ff66;">🔐 Anti-Fraud</h3><p>Every ticket has: sequential ID (1–1M), HMAC-SHA256 signature, owner binding, timestamp. Tickets cannot be forged, duplicated, or transferred without cryptographic proof.</p></div>
-    <div class="ac"><h3 style="color:#ff1a44;">💸 Rules</h3><ul>
-      <li>Max <span>10 tickets</span> per person per game</li>
-      <li>Gift up to <span>10</span> to a friend</li>
-      <li>Drawing at <span>1,000,000</span> tickets</li>
-      <li><span>25%</span> tax withheld</li>
-      <li>SystemRandom for winner selection</li></ul></div>
+<!-- FLOOR TAB -->
+<div class="main-tab-body active" id="tabpanel-floor">
+  <div class="casino-floor" style="padding-top:16px;">
+    <div class="floor-title">🎰 THE <span>CASINO FLOOR</span> — 5 RAFFLE GAMES</div>
+    <div class="wallet-bar">
+      <span class="wb-label">💳 SLOT WALLET</span>
+      <span class="wb-amt" id="walletAmt">5000</span>
+      <span style="font-family:'Oswald',sans-serif;font-size:.7rem;color:rgba(255,215,0,.4);">CR</span>
+      <div class="wb-sep"></div>
+      <span style="font-size:.68rem;color:rgba(255,255,255,.3);font-family:'Oswald',sans-serif;letter-spacing:1px;">Transfer between machines freely · Credits never expire</span>
+    </div>
+    <div class="machine-row" id="floorArea"></div>
+  </div>
+</div>
+<!-- CHARTS TAB -->
+<div class="main-tab-body" id="tabpanel-charts">
+  <div class="charts-body" id="chartsBody">
+    <div class="jp-strip" id="jackpotStrip"></div>
+    <div class="sg" id="statsGrid"></div>
+    <div class="sw"><input type="range" id="monthSlider" min="1" max="{{ months }}" value="{{ months }}"><div id="monthLabel">Month {{ months }}</div></div>
+    <div class="cr"><div class="cc"><h3>💰 Revenue vs Payouts</h3><canvas id="revChart"></canvas></div><div class="cc"><h3>🎟 Recipients</h3><canvas id="recipChart"></canvas></div></div>
+    <div class="cr"><div class="cc"><h3>📈 Cumulative</h3><canvas id="cumChart"></canvas></div><div class="cc"><h3>🎯 Tier Split</h3><canvas id="tierPieChart"></canvas></div></div>
+  </div>
+</div>
+<!-- ABOUT TAB -->
+<div class="main-tab-body" id="tabpanel-about">
+  <div class="about-sec">
+    <div class="about-t">📖 About Gman's Casino MaxPlusPro v1.17</div>
+    <div class="ag">
+      <div class="ac"><h3 style="color:#FFD700;">🎯 What Is This?</h3><p>Global multi-tier raffle. Tickets sequentially numbered 1–1,000,000. HMAC-SHA256 anti-fraud. Drawing fires at exactly 1M tickets. Winners paid monthly annuity. 25% tax. Handles billions of micro-transactions globally.</p></div>
+      <div class="ac"><h3 style="color:#00ccff;">🎟 5 Games</h3><ul>
+        <li><span>$0.25</span> — 5 winners · $8,333/mo × 6mo · $250K pool</li>
+        <li><span>$4</span> — 80 winners · $8,333/mo × 6mo · $4M pool</li>
+        <li><span>$10</span> — 25 winners · $33,333/mo × 12mo · $10M pool</li>
+        <li><span>$100</span> — 200 winners · $83,333/mo × 12mo · $100M pool</li>
+        <li><span>$1,000</span> — 2,000 winners · $20,833/mo × 24mo · $1B pool</li></ul></div>
+      <div class="ac"><h3 style="color:#00ff66;">🔐 Anti-Fraud</h3><p>Every ticket has: sequential ID (1–1M), HMAC-SHA256 signature, owner binding, timestamp. Tickets cannot be forged, duplicated, or transferred without cryptographic proof.</p></div>
+      <div class="ac"><h3 style="color:#ff1a44;">💸 Rules</h3><ul>
+        <li>Max <span>10 tickets</span> per person per game</li>
+        <li>Gift up to <span>10</span> to a friend</li>
+        <li>Drawing at <span>1,000,000</span> tickets</li>
+        <li><span>25%</span> tax withheld</li>
+        <li>SystemRandom for winner selection</li></ul></div>
+    </div>
   </div>
 </div>
 <footer>🎰 Gman's Casino MaxPlusPro v1.17 — Sequential Ticketing — HMAC Anti-Fraud — Pre-Launch Concept</footer>
@@ -815,41 +978,357 @@ function sndJackpot(){
 }
 
 /* ===== CASINO MUSIC (Web Audio synth loop) ===== */
-let musicOn=false,musicNodes=[];
+let musicOn=false,musicNodes=[],musicTimers=[];
+
+/* ── Casino Lounge Soundtrack ──────────────────────────────────────────────
+   Style : slow jazz lounge / elevator casino  (~96 bpm, swing 8ths)
+   Layers: 1) Vibraphone-style melody  (sine + small detune, fast decay)
+           2) Walking bass             (sawtooth, low-pass filtered)
+           3) Brushed hi-hat rhythm    (noise burst, high-pass)
+           4) Soft piano chords        (triangle, slow attack)
+           5) Room reverb              (convolver with synthetic IR)
+────────────────────────────────────────────────────────────────────────── */
 function buildMusicLoop(){
   const a=getAC();
-  const master=a.createGain();master.gain.value=0.09;master.connect(a.destination);
-  /* Simple casino-style progression: I-IV-V-I in C */
-  const prog=[[261,329,392],[349,440,523],[392,494,587],[261,329,392,523]];
-  let step=0;
-  function playChord(){
+  const track=(document.getElementById('musicTrack')||{value:'lounge'}).value;
+
+  /* ---- Master chain with soft compressor ---- */
+  const master=a.createGain(); master.gain.value=0.0;
+  const comp=a.createDynamicsCompressor();
+  comp.threshold.value=-18; comp.knee.value=12;
+  comp.ratio.value=4; comp.attack.value=0.003; comp.release.value=0.25;
+  master.connect(comp); comp.connect(a.destination);
+  musicNodes=[master,comp];
+
+  /* Fade in gracefully */
+  const targetVol=musicVolume*0.45;
+  master.gain.setValueAtTime(0,a.currentTime);
+  master.gain.linearRampToValueAtTime(targetVol,a.currentTime+2.5);
+
+  if(track==='swing'){buildSwing(a,master);return;}
+  if(track==='bossa'){buildBossa(a,master);return;}
+  if(track==='ambient'){buildAmbient(a,master);return;}
+
+  /* ---- Synthetic reverb (noise impulse response) ---- */
+  function makeReverb(dur=1.8,decay=2.2){
+    const sr=a.sampleRate, len=sr*dur, ir=a.createBuffer(2,len,sr);
+    for(let c=0;c<2;c++){
+      const d=ir.getChannelData(c);
+      for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,decay);
+    }
+    const cv=a.createConvolver(); cv.buffer=ir; return cv;
+  }
+  const reverb=makeReverb();
+  const revGain=a.createGain(); revGain.gain.value=0.28;
+  reverb.connect(revGain); revGain.connect(master);
+  musicNodes.push(reverb,revGain);
+
+  /* ---- Tempo & timing ---- */
+  const BPM=96, beat=60/BPM, bar=beat*4;
+
+  /* ---- Chord progression (casino lounge: Cmaj7 → Am7 → Dm7 → G7) ---- */
+  // Each chord: [root, 3rd, 5th, 7th] in Hz
+  const chords=[
+    [261.63,329.63,392.00,493.88],  // Cmaj7
+    [220.00,261.63,329.63,392.00],  // Am7
+    [146.83,174.61,220.00,261.63],  // Dm7
+    [196.00,246.94,293.66,349.23],  // G7
+  ];
+  // Walking bass roots matching each chord
+  const bassNotes=[130.81,110.00,146.83,98.00];
+  // Melody — lounge riff over 16 beats (4 bars)
+  // Each entry: [beat-offset, freq, duration]
+  const melody=[
+    [0,   523.25,0.38],[0.5, 493.88,0.25],[1,   440.00,0.38],[1.5, 392.00,0.25],
+    [2,   440.00,0.55],[3,   392.00,0.38],[3.5, 349.23,0.25],
+    [4,   329.63,0.55],[5,   293.66,0.38],[5.5, 329.63,0.25],[6,   349.23,0.38],
+    [6.5, 392.00,0.25],[7,   440.00,0.55],
+    [8,   493.88,0.38],[8.5, 440.00,0.25],[9,   392.00,0.55],
+    [10,  349.23,0.38],[11,  329.63,0.38],[11.5,293.66,0.25],
+    [12,  261.63,0.55],[13,  293.66,0.38],[13.5,329.63,0.25],
+    [14,  349.23,0.38],[14.5,392.00,0.25],[15,  440.00,0.75],
+  ];
+
+  /* ---- Note helper: vibraphone (sine+detune, fast decay, reverb send) ---- */
+  function vibe(freq,start,dur,vol=0.22){
+    const o=a.createOscillator(), o2=a.createOscillator();
+    o.type='sine'; o.frequency.value=freq;
+    o2.type='sine'; o2.frequency.value=freq*1.003; // slight detune = shimmer
+    const g=a.createGain();
+    g.gain.setValueAtTime(0,start);
+    g.gain.linearRampToValueAtTime(vol,start+0.012);
+    g.gain.exponentialRampToValueAtTime(vol*0.4,start+dur*0.3);
+    g.gain.exponentialRampToValueAtTime(0.0001,start+dur+0.25);
+    o.connect(g); o2.connect(g);
+    g.connect(master); g.connect(reverb);
+    o.start(start); o.stop(start+dur+0.35);
+    o2.start(start); o2.stop(start+dur+0.35);
+    musicNodes.push(o,o2,g);
+  }
+
+  /* ---- Piano chord helper (soft triangle, slow attack) ---- */
+  function chord(freqs,start,dur,vol=0.08){
+    freqs.forEach(f=>{
+      const o=a.createOscillator(), g=a.createGain();
+      o.type='triangle'; o.frequency.value=f;
+      g.gain.setValueAtTime(0,start);
+      g.gain.linearRampToValueAtTime(vol,start+0.06);
+      g.gain.setValueAtTime(vol,start+dur-0.1);
+      g.gain.linearRampToValueAtTime(0,start+dur+0.2);
+      o.connect(g); g.connect(master); g.connect(reverb);
+      o.start(start); o.stop(start+dur+0.3);
+      musicNodes.push(o,g);
+    });
+  }
+
+  /* ---- Bass helper (sawtooth + low-pass filter, pluck envelope) ---- */
+  function bass(freq,start,dur,vol=0.28){
+    const o=a.createOscillator(), f=a.createBiquadFilter(), g=a.createGain();
+    o.type='sawtooth'; o.frequency.value=freq;
+    f.type='lowpass'; f.frequency.value=320; f.Q.value=1.5;
+    g.gain.setValueAtTime(0,start);
+    g.gain.linearRampToValueAtTime(vol,start+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,start+dur+0.18);
+    o.connect(f); f.connect(g); g.connect(master);
+    o.start(start); o.stop(start+dur+0.25);
+    musicNodes.push(o,f,g);
+  }
+
+  /* ---- Hi-hat helper (filtered noise burst) ---- */
+  function hat(start,vol=0.04,open=false){
+    const buf=a.createBuffer(1,a.sampleRate*0.12,a.sampleRate);
+    const d=buf.getChannelData(0);
+    for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+    const src=a.createBufferSource();
+    src.buffer=buf;
+    const hp=a.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=8000;
+    const g=a.createGain();
+    g.gain.setValueAtTime(vol,start);
+    g.gain.exponentialRampToValueAtTime(0.0001,start+(open?0.18:0.055));
+    src.connect(hp); hp.connect(g); g.connect(master);
+    src.start(start); src.stop(start+0.22);
+    musicNodes.push(src,hp,g);
+  }
+
+  /* ---- Schedule one 4-bar phrase starting at `t` ---- */
+  function phrase(t){
+    if(!musicOn) return;
+    const totalBeats=16;
+
+    // Chords: one per bar (4 beats each)
+    for(let b=0;b<4;b++){
+      chord(chords[b], t+b*bar, bar*0.92);
+    }
+
+    // Walking bass: one note per beat (swing 8th feel — on the beat)
+    for(let b=0;b<totalBeats;b++){
+      const ci=Math.floor(b/4)%4;
+      // Walking pattern: root, 5th, 7th, approaching note
+      const walk=[1, 1.5, 1.75, 0.9375]; // ratios relative to chord root
+      const ratio=walk[b%4];
+      bass(bassNotes[ci]*ratio, t+b*beat, beat*0.85);
+    }
+
+    // Melody: schedule each note
+    melody.forEach(([bo,freq,dur])=>{
+      vibe(freq, t+bo*beat, dur*beat*0.9);
+    });
+
+    // Hi-hats: steady swing 8ths (on beat + swing-delayed offbeat)
+    for(let b=0;b<totalBeats;b++){
+      hat(t+b*beat, 0.04);                    // on-beat
+      hat(t+b*beat+beat*0.62, 0.025, false);  // swung offbeat
+    }
+
+    // Queue next phrase
+    const phraseDur=bar*4*1000;
+    const tid=setTimeout(()=>phrase(a.currentTime+0.05), phraseDur-80);
+    musicTimers.push(tid);
+  }
+
+  phrase(a.currentTime+0.1);
+}
+
+/* ── BIG BAND SWING (120 bpm, staccato brass stabs, shuffle) ── */
+function buildSwing(a,master){
+  const BPM=120,beat=60/BPM,bar=beat*4;
+  // Brass chord stabs: Bb7 → Eb7 → F7 → Bb7
+  const stabs=[[233.08,293.66,349.23,466.16],[155.56,195.99,233.08,311.13],[174.61,220.00,261.63,349.23],[233.08,293.66,349.23,466.16]];
+  const bassR=[116.54,97.99,87.31,116.54];
+  function stab(freqs,t,dur,vol=0.13){
+    freqs.forEach(f=>{
+      const o=a.createOscillator(),g=a.createGain();
+      o.type='sawtooth';o.frequency.value=f;
+      const lp=a.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1800;
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      o.connect(lp);lp.connect(g);g.connect(master);
+      o.start(t);o.stop(t+dur+0.05);
+      musicNodes.push(o,lp,g);
+    });
+  }
+  function wbass(f,t,dur){
+    const o=a.createOscillator(),g=a.createGain();
+    o.type='triangle';o.frequency.value=f;
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.3,t+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+0.1);
+    musicNodes.push(o,g);
+  }
+  function ride(t,vol=0.03){
+    const buf=a.createBuffer(1,a.sampleRate*0.08,a.sampleRate);
+    const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+    const s=a.createBufferSource(),hp=a.createBiquadFilter(),g=a.createGain();
+    s.buffer=buf;hp.type='bandpass';hp.frequency.value=6000;hp.Q.value=2;
+    g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(0.0001,t+0.12);
+    s.connect(hp);hp.connect(g);g.connect(master);s.start(t);s.stop(t+0.15);
+    musicNodes.push(s,hp,g);
+  }
+  function phrase(t){
     if(!musicOn)return;
-    const now=a.currentTime;
-    prog[step%prog.length].forEach((f,i)=>{
+    for(let b=0;b<4;b++){
+      // Swing stabs: beat 1 and the "and" of 2 (swing feel)
+      stab(stabs[b],t+b*bar,beat*0.18);
+      stab(stabs[b],t+b*bar+beat*1.65,beat*0.18);
+      stab(stabs[b],t+b*bar+beat*2,beat*0.18);
+      stab(stabs[b],t+b*bar+beat*3.65,beat*0.18);
+      for(let i=0;i<4;i++){
+        wbass(bassR[b],t+b*bar+i*beat,beat*0.7);
+        ride(t+b*bar+i*beat);
+        ride(t+b*bar+i*beat+beat*0.66,0.02);
+      }
+    }
+    const tid=setTimeout(()=>phrase(a.currentTime+0.05),bar*4*1000-80);
+    musicTimers.push(tid);
+  }
+  phrase(a.currentTime+0.1);
+}
+
+/* ── BOSSA NOVA GROOVE (80 bpm, gentle guitar comp, light percussion) ── */
+function buildBossa(a,master){
+  const BPM=80,beat=60/BPM,bar=beat*4;
+  // Bossa chords: Amaj7 → D9 → Bm7 → E7
+  const chords=[[220,277.18,329.63,415.30],[146.83,184.99,220,277.18],[246.94,293.66,369.99,440],[164.81,207.65,246.94,329.63]];
+  const bassR=[110,73.42,123.47,82.41];
+  function nylon(freqs,t,dur,vol=0.09){
+    freqs.forEach((f,i)=>{
       const o=a.createOscillator(),g=a.createGain();
       o.type='triangle';o.frequency.value=f;
-      g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(.35,now+.06);
-      g.gain.setValueAtTime(.35,now+.55);g.gain.linearRampToValueAtTime(0,now+.75);
-      o.connect(g);g.connect(master);
-      o.start(now);o.stop(now+.8);
+      g.gain.setValueAtTime(0,t+i*0.018);
+      g.gain.linearRampToValueAtTime(vol,t+i*0.018+0.025);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      o.connect(g);g.connect(master);o.start(t+i*0.018);o.stop(t+dur+0.1);
+      musicNodes.push(o,g);
     });
-    /* walking bass */
-    const bass=[130,87,98,130];
-    const ob=a.createOscillator(),gb=a.createGain();
-    ob.type='sine';ob.frequency.value=bass[step%bass.length];
-    gb.gain.setValueAtTime(.5,now);gb.gain.exponentialRampToValueAtTime(.001,now+.7);
-    ob.connect(gb);gb.connect(master);ob.start(now);ob.stop(now+.75);
-    step++;
-    if(musicOn) setTimeout(playChord,750);
   }
-  musicNodes=[master];
-  playChord();
+  function clave(t,vol=0.05){
+    const buf=a.createBuffer(1,a.sampleRate*0.04,a.sampleRate);
+    const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3);
+    const s=a.createBufferSource(),bp=a.createBiquadFilter(),g=a.createGain();
+    s.buffer=buf;bp.type='bandpass';bp.frequency.value=2200;bp.Q.value=8;
+    g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(0.0001,t+0.06);
+    s.connect(bp);bp.connect(g);g.connect(master);s.start(t);s.stop(t+0.08);
+    musicNodes.push(s,bp,g);
+  }
+  function bbass(f,t,dur){
+    const o=a.createOscillator(),g=a.createGain();
+    o.type='sine';o.frequency.value=f;
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.22,t+0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+0.1);
+    musicNodes.push(o,g);
+  }
+  function phrase(t){
+    if(!musicOn)return;
+    for(let b=0;b<4;b++){
+      nylon(chords[b],t+b*bar,bar*0.9);
+      nylon(chords[b],t+b*bar+beat*2,beat*1.8);
+      // Clave pattern: 3-2 son clave
+      [0,0.75,1.5,2.5,3].forEach(o=>clave(t+b*bar+o*beat));
+      [0,beat*0.5,beat*2,beat*2.5].forEach(o=>bbass(bassR[b],t+b*bar+o,beat*0.45));
+    }
+    const tid=setTimeout(()=>phrase(a.currentTime+0.05),bar*4*1000-80);
+    musicTimers.push(tid);
+  }
+  phrase(a.currentTime+0.1);
+}
+
+/* ── AMBIENT NEON (slow pads, arpeggiated synth, dreamy) ── */
+function buildAmbient(a,master){
+  const beat=1.2; // slow, ~50bpm feel
+  // Slow evolving pad: Em9 sus feel
+  const padFreqs=[82.41,123.47,164.81,220,246.94,329.63,369.99];
+  // Arp pattern over pentatonic
+  const arpFreqs=[261.63,311.13,369.99,415.30,493.88,523.25,622.25,739.99];
+  function pad(freqs,t,dur,vol=0.04){
+    freqs.forEach((f,i)=>{
+      const o=a.createOscillator(),o2=a.createOscillator(),g=a.createGain();
+      o.type='sine';o.frequency.value=f;
+      o2.type='sine';o2.frequency.value=f*1.002;
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+1.2);
+      g.gain.setValueAtTime(vol,t+dur-0.8);g.gain.linearRampToValueAtTime(0,t+dur+0.5);
+      o.connect(g);o2.connect(g);g.connect(master);
+      o.start(t);o.stop(t+dur+0.6);o2.start(t);o2.stop(t+dur+0.6);
+      musicNodes.push(o,o2,g);
+    });
+  }
+  function arp(f,t,vol=0.08){
+    const o=a.createOscillator(),g=a.createGain();
+    o.type='sine';o.frequency.value=f;
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+0.04);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.5);
+    o.connect(g);g.connect(master);o.start(t);o.stop(t+0.6);
+    musicNodes.push(o,g);
+  }
+  let arpStep=0;
+  function phrase(t){
+    if(!musicOn)return;
+    pad(padFreqs,t,beat*8,0.05);
+    // Ascending then descending arp over 8 beats
+    for(let i=0;i<8;i++){
+      const f=arpFreqs[(arpStep+i)%arpFreqs.length];
+      arp(f,t+i*beat*0.5,0.06);
+    }
+    arpStep=(arpStep+3)%arpFreqs.length;
+    const tid=setTimeout(()=>phrase(a.currentTime+0.05),beat*8*1000-100);
+    musicTimers.push(tid);
+  }
+  phrase(a.currentTime+0.1);
+}
+
+let musicVolume=0.40;
+let musicPanelOpen=false;
+function toggleMusicPanel(){
+  musicPanelOpen=!musicPanelOpen;
+  document.getElementById('musicPanelBody').style.display=musicPanelOpen?'block':'none';
+  document.getElementById('musicPanelArrow').textContent=musicPanelOpen?'▼':'▲';
+}
+function setMusicVol(v){
+  musicVolume=v/100;
+  document.getElementById('musicVolLbl').textContent=v+'%';
+  if(musicNodes[0]) try{musicNodes[0].gain.value=musicVolume*0.45;}catch(e){}
+}
+function switchTrack(){
+  if(!musicOn)return;
+  musicTimers.forEach(t=>clearTimeout(t));musicTimers=[];
+  musicNodes.forEach(n=>{try{n.disconnect();}catch(e){}});musicNodes=[];
+  buildMusicLoop();
 }
 function toggleMusic(){
   musicOn=!musicOn;
-  document.getElementById('musicBtn').textContent=musicOn?'🎵 MUSIC: ON':'🎵 MUSIC: OFF';
-  if(musicOn){try{getAC().resume().then(buildMusicLoop);}catch(e){buildMusicLoop();}}
-  else{musicNodes.forEach(n=>{try{n.disconnect();}catch(e){}});musicNodes=[];}
+  const btn=document.getElementById('musicBtn');
+  const lbl=document.getElementById('musicOnLbl');
+  btn.textContent=musicOn?'ON':'OFF';
+  btn.style.background=musicOn?'rgba(255,215,0,.2)':'#1a0008';
+  btn.style.borderColor=musicOn?'#FFD700':'rgba(255,215,0,.35)';
+  if(lbl) lbl.textContent=musicOn?'● PLAYING':'OFF';
+  if(lbl) lbl.style.color=musicOn?'#00ff88':'rgba(255,215,0,.4)';
+  if(musicOn){
+    try{getAC().resume().then(()=>{buildMusicLoop();});}catch(e){buildMusicLoop();}
+  } else {
+    musicTimers.forEach(t=>clearTimeout(t));musicTimers=[];
+    musicNodes.forEach(n=>{try{n.disconnect();}catch(e){}});musicNodes=[];
+  }
 }
 document.addEventListener('click',()=>{try{getAC().resume();}catch(e){}},{once:true});
 
@@ -910,14 +1389,38 @@ function refreshTicker(){
 }
 refreshTicker();setInterval(refreshTicker,30000);
 
-/* ===== TRADITIONAL SLOT SYMBOLS ===== */
+/* ===== YETI SLOT SYMBOLS — weighted pool (commons repeat for lower odds) ===== */
+// Each tier: common symbols repeat, rares appear once → natural weighting
 const SYMBOLS_BY_TIER = {
-  '025':  ['🍒','🍋','🔔','⭐','7️⃣'],           // 3 reels
-  '4':    ['🍒','💎','🔔','⭐','7️⃣','🍀'],       // 3 reels
-  '10':   ['🍒','💎','🔔','⭐','7️⃣','🍀','👑'],  // 4 reels
-  '100':  ['🍒','💎','🔔','⭐','7️⃣','🍀','👑','💰'], // 5 reels
-  '1000': ['🍒','💎','🔔','⭐','7️⃣','🍀','👑','💰','🎰','🏆'], // 6 reels
+  // 3 reels — 14 symbol pool (~1/14^3 = ~0.04% jackpot per spin)
+  '025': ['🍒','🍒','🍒','🍋','🍋','🍋','🍉','🍉','🔔','🔔','⭐','7️⃣','🧊','❄️'],
+  // 3 reels — 16 pool
+  '4':   ['🍒','🍒','🍒','🍋','🍋','🍉','🍉','�','🔔','⭐','⭐','7️⃣','💎','🧊','❄️','🦣'],
+  // 4 reels — 16 pool (~1/16^4 = ~0.0015% jackpot)
+  '10':  ['🍒','🍒','🍒','🍋','🍋','🍉','🍉','�','🔔','⭐','⭐','7️⃣','💎','🧊','❄️','🦣'],
+  // 5 reels — 18 pool
+  '100': ['🍒','🍒','🍒','🍋','🍋','🍉','🍉','🍇','🍇','�','🔔','⭐','7️⃣','💎','🧊','❄️','🦣','�'],
+  // 6 reels — 20 pool (~1/20^6 extremely rare jackpot)
+  '1000':['🍒','🍒','🍒','🍋','🍋','🍉','🍉','🍇','🍇','�','🔔','⭐','⭐','7️⃣','💎','💰','🧊','❄️','🦣','👑'],
 };
+
+/* Yeti paytable: symbol → multiplier by match count [3-of,4-of,5-of,6-of] */
+const PAYTABLE = {
+  '🍒':{name:'Cherry',   m:[2,5,15,40]},
+  '�':{name:'Lemon',    m:[3,8,20,60]},
+  '�':{name:'Watermelon',m:[4,10,30,80]},
+  '🍇':{name:'Grapes',   m:[5,15,40,100]},
+  '🔔':{name:'Bell',     m:[8,20,60,150]},
+  '⭐':{name:'Star',     m:[10,25,80,200]},
+  '7️⃣':{name:'Seven',   m:[15,40,120,350]},
+  '💎':{name:'Diamond',  m:[20,60,180,500]},
+  '💰':{name:'Moneybag', m:[30,90,280,800]},
+  '👑':{name:'Crown',    m:[40,120,400,1200]},
+  '🧊':{name:'Ice Block',m:[6,14,45,110]},
+  '❄️':{name:'Snowflake',m:[8,18,55,140]},
+  '🦣':{name:'YETI',     m:[50,200,1000,5000]},  // rarest
+};
+const DEFAULT_MULT=[1,3,10,30]; // fallback if symbol not in paytable
 
 /* ===== GAME DEFINITIONS ===== */
 const G=[
@@ -944,7 +1447,7 @@ const G=[
 ];
 
 const GS={};
-G.forEach(g=>{GS[g.id]={myTickets:[],recentWins:[],spinning:false,spins:0,progress:0};});
+G.forEach(g=>{GS[g.id]={myTickets:[],recentWins:[],spinning:false,spins:0,progress:0,freeSpins:0};});
 
 /* Player identity (stored in localStorage) */
 let PLAYER_ID = localStorage.getItem('casino_player_id');
@@ -966,10 +1469,18 @@ function buildMachine(g){
     reelsHTML+=`<div class="reel" id="reel-${g.id}-${i}"><div class="reel-strip" id="rs-${g.id}-${i}">${buildReelStrip(g.id)}</div></div>`;
   }
   let bulbs='';
-  for(let i=0;i<18;i++)bulbs+=`<div class="mb" style="color:${g.accent};background:${g.accent};animation:bc ${.7+i%3*.25}s ${i*.06}s infinite;"></div>`;
+  const nBulbs=18;
+  for(let i=0;i<nBulbs;i++){
+    const dur=(0.3+Math.random()*0.6).toFixed(2);
+    const del=(Math.random()*0.8).toFixed(2);
+    const anim=Math.random()<0.5?'mbon':'mbof';
+    bulbs+=`<div class="mb" style="color:${g.accent};background:${g.accent};animation:${anim} ${dur}s ${del}s ease infinite;"></div>`;
+  }
 
   return `
-  <div class="machine">
+  <div class="machine" id="mach-${g.id}">
+    <div class="m-border-lights" id="mbl-${g.id}"></div>
+    <div class="m-card" style="position:relative;z-index:2;">
     <div class="m-sign" style="border-color:${g.border};background:linear-gradient(180deg,rgba(0,0,0,.7),rgba(0,0,0,.4));box-shadow:0 0 40px ${g.glow}44,inset 0 0 30px rgba(0,0,0,.5);">
       <div class="m-sign-name" style="color:${g.accent}">${g.name}</div>
       <div class="m-sign-price" style="color:${g.accent}">${g.label} ENTRY</div>
@@ -978,13 +1489,41 @@ function buildMachine(g){
     <div class="m-bulbs" style="border-color:${g.border}">${bulbs}</div>
     <div class="m-body" style="border-color:${g.border};box-shadow:0 0 50px ${g.glow}22;">
       <div class="m-inner">
-        <!-- REELS -->
-        <div class="reel-box" style="border-color:${g.accent}33;">
-          <div class="reel-row">${reelsHTML}</div>
+        <!-- REELS + PAYLINE OVERLAY -->
+        <div class="reel-wrap">
+          <div class="reel-lines-col" id="plcol-${g.id}">
+            <span class="rl-num" id="pl1-${g.id}">1</span>
+            <span class="rl-num" id="pl2-${g.id}">2</span>
+            <span class="rl-num" id="pl3-${g.id}">3</span>
+          </div>
+          <div style="position:relative;flex:1;">
+            <div class="reel-box" style="border-color:${g.accent}33;">
+              <div class="reel-row">${reelsHTML}</div>
+            </div>
+            <svg class="pl-svg" id="plsvg-${g.id}" viewBox="0 0 300 256" preserveAspectRatio="none" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5;"></svg>
+          </div>
+          <div class="reel-lines-col" id="plcol2-${g.id}">
+            <span class="rl-num" id="pl4-${g.id}">4</span>
+            <span class="rl-num" id="pl5-${g.id}">5</span>
+            <span class="rl-num" style="opacity:0;">·</span>
+          </div>
         </div>
         <div class="play-area">
+          <div class="yeti-controls">
+            <div class="yc-group"><label class="yc-lbl">LINES</label><select class="yc-sel" id="lines-${g.id}"><option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option></select></div>
+            <div class="yc-group"><label class="yc-lbl">BET/LINE</label><select class="yc-sel" id="bet-${g.id}"><option>1</option><option selected>2</option><option>5</option><option>10</option><option>25</option></select></div>
+            <div class="yc-group"><label class="yc-lbl">TOTAL BET</label><span class="yc-tot" id="tot-${g.id}">10 cr</span></div>
+          </div>
+          <button class="btn-info" onclick="openPT('${g.id}')" title="Paytable & Info">ℹ</button>
           <button class="btn-pull" id="pull-${g.id}" style="background:${g.btnBg};color:${g.btnC};box-shadow:0 0 25px ${g.glow}55;"
             onclick="doPull('${g.id}')">🎰 PULL — SPIN ${g.reels} REELS</button>
+          <div class="yeti-balance">💰 Credits: <span id="bal-${g.id}" style="color:${g.accent}">1000</span> &nbsp;|&nbsp; Spins: <span id="spincnt-${g.id}" style="color:rgba(255,255,255,.4)">0</span></div>
+          <div class="mach-wallet">
+            <span class="mw-lbl">💳 WALLET TRANSFER</span>
+            <input class="mw-inp" type="number" min="1" value="100" id="wt-${g.id}">
+            <button class="mw-dep" onclick="walletDeposit('${g.id}')">➕ DEPOSIT</button>
+            <button class="mw-wit" onclick="walletWithdraw('${g.id}')">➖ WITHDRAW</button>
+          </div>
         </div>
         <div class="pull-result" id="pr-${g.id}"></div>
         <div class="m-grid">
@@ -1018,111 +1557,486 @@ function buildMachine(g){
         </div>
       </div>
     </div>
+  </div>
   </div>`;
 }
 
-document.getElementById('floorArea').innerHTML=G.map(buildMachine).join('');
+/* 5 payline definitions: rows=[row index per column] (0=top,1=mid,2=bot) */
+const PAYLINE_DEFS=[
+  {rows:[1,1,1,1,1,1], color:'#FFD700'},  // line 1: middle
+  {rows:[0,0,0,0,0,0], color:'#00ccff'},  // line 2: top
+  {rows:[2,2,2,2,2,2], color:'#ff4488'},  // line 3: bottom
+  {rows:[0,1,2,1,0,1], color:'#00ff99'},  // line 4: zigzag down
+  {rows:[2,1,0,1,2,1], color:'#dd00ff'},  // line 5: zigzag up
+];
+const PAYLINE_COLORS=['#FFD700','#00ccff','#ff4488','#00ff99','#dd00ff'];
 
-/* ===== REEL SPIN — TRADITIONAL SYMBOLS ===== */
+document.getElementById('floorArea').innerHTML=G.map(buildMachine).join('');
+G.forEach(g=>wireYetiControls(g.id));
+
+/* Build perimeter flashing bulbs around each machine */
+function buildBorderLights(g){
+  const container=document.getElementById('mbl-'+g.id);
+  if(!container)return;
+  const W=340, H=container.closest('.machine').offsetHeight||700;
+  const spacing=20, r=4; // spacing between bulbs, radius offset from edge
+  let html='';
+  let idx=0;
+  function mkBulb(x,y){
+    const dur=(0.2+Math.random()*0.55).toFixed(2);
+    const del=(Math.random()*1.2).toFixed(2);
+    const anim=Math.random()<0.5?'mblon':'mblof';
+    html+=`<div class="mbl" style="left:${x}px;top:${y}px;color:${g.accent};background:${g.accent};animation:${anim} ${dur}s ${del}s ease infinite;"></div>`;
+    idx++;
+  }
+  // Top edge (left → right)
+  for(let x=r;x<W-r;x+=spacing) mkBulb(x,r);
+  // Right edge (top → bottom)
+  for(let y=spacing;y<H-r;y+=spacing) mkBulb(W-r-9,y);
+  // Bottom edge (right → left)
+  for(let x=W-r-spacing;x>r;x-=spacing) mkBulb(x,H-r-9);
+  // Left edge (bottom → top)
+  for(let y=H-r-spacing*2;y>spacing;y-=spacing) mkBulb(r,y);
+  container.innerHTML=html;
+}
+// Run after layout is fully settled (double rAF + timeout for paint)
+requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(()=>{
+  G.forEach(g=>{
+    try{buildBorderLights(g);}catch(e){}
+    try{drawPaylines(g.id);}catch(e){}
+    // Reset any stale spinning state on page load
+    if(GS[g.id]) GS[g.id].spinning=false;
+    const btn=document.getElementById('pull-'+g.id);
+    if(btn) btn.disabled=false;
+  });
+},200)));
+
+/* ===== YETI THE BETTI — SLOT ENGINE ===== */
+
+/* ===== SHARED CREDIT WALLET ===== */
+let WALLET=5000; // shared pool across all machines
+const GBAL={};
+G.forEach(g=>{GBAL[g.id]=1000;}); // each machine starts with 1000 credits
+
+function updateWalletDisplay(){
+  document.getElementById('walletAmt').textContent=WALLET.toLocaleString();
+}
+function walletDeposit(gid){
+  const amt=parseInt(document.getElementById('wt-'+gid).value)||0;
+  if(amt<=0||amt>WALLET){
+    const pr=document.getElementById('pr-'+gid);
+    pr.innerHTML='<span style="color:#f55;font-size:.72rem;">Not enough in wallet (have '+WALLET+' cr)</span>';
+    return;
+  }
+  WALLET-=amt;
+  GBAL[gid]+=amt;
+  document.getElementById('bal-'+gid).textContent=GBAL[gid].toFixed(0);
+  updateWalletDisplay();
+  const pr=document.getElementById('pr-'+gid);
+  pr.innerHTML='<span style="color:#00ff88;font-size:.72rem;">+'+amt+' cr deposited to machine</span>';
+}
+function walletWithdraw(gid){
+  const amt=parseInt(document.getElementById('wt-'+gid).value)||0;
+  if(amt<=0||amt>GBAL[gid]){
+    const pr=document.getElementById('pr-'+gid);
+    pr.innerHTML='<span style="color:#f55;font-size:.72rem;">Not enough credits on machine (have '+GBAL[gid]+')</span>';
+    return;
+  }
+  GBAL[gid]-=amt;
+  WALLET+=amt;
+  document.getElementById('bal-'+gid).textContent=GBAL[gid].toFixed(0);
+  updateWalletDisplay();
+  const pr=document.getElementById('pr-'+gid);
+  pr.innerHTML='<span style="color:#FFD700;font-size:.72rem;">'+amt+' cr withdrawn to wallet</span>';
+}
+
+/* ===== PAYTABLE MODAL ===== */
+const SYM_RARITY={
+  '🍒':'c','🍋':'c','🍉':'c','🍇':'u','🔔':'u','⭐':'u',
+  '7️⃣':'r','💎':'r','💰':'r','👑':'l','🧊':'u','❄️':'u','🦣':'l'
+};
+const SYM_RARITY_LABEL={'c':'COMMON','u':'UNCOMMON','r':'RARE','l':'LEGENDARY'};
+
+function openPT(gid){
+  const g=G.find(x=>x.id===gid);
+  if(!g)return;
+  const pool=SYMBOLS_BY_TIER[gid]||SYMBOLS_BY_TIER['025'];
+  const modal=document.getElementById('ptModal');
+  const box=document.getElementById('ptBox');
+  box.style.borderColor=g.accent;
+  document.getElementById('ptTitle').style.color=g.accent;
+  document.getElementById('ptTitle').textContent=g.name+' — PAYTABLE';
+  document.getElementById('ptSub').textContent=g.reels+' REELS · '+pool.length+' SYMBOL POOL · 5 PAYLINES · '+g.label+' RAFFLE ENTRY';
+
+  // Symbol frequency in this machine's pool
+  const freq={};
+  pool.forEach(s=>{freq[s]=(freq[s]||0)+1;});
+  const poolSize=pool.length;
+
+  // Unique symbols in this pool
+  const uniq=[...new Set(pool)];
+
+  // Win rate: probability of getting >=2 of a symbol on middle row (simplified)
+  // P(k matches on n reels) ≈ C(n,k) * p^k * (1-p)^(n-k) where p = freq/poolSize
+  function binom(n,k){if(k>n)return 0;let r=1;for(let i=0;i<k;i++)r=r*(n-i)/(i+1);return r;}
+  function winProb(sym,n){
+    const p=(freq[sym]||0)/poolSize;
+    let prob=0;
+    for(let k=2;k<=n;k++) prob+=binom(n,k)*Math.pow(p,k)*Math.pow(1-p,n-k);
+    return prob;
+  }
+  const anyWinProb=1-uniq.reduce((acc,sym)=>{
+    const p=(freq[sym]||0)/poolSize;
+    return acc*(1-winProb(sym,g.reels)+(binom(g.reels,0)*Math.pow(1-p,g.reels)+binom(g.reels,1)*p*Math.pow(1-p,g.reels-1)));
+  },1);
+  // Simpler: per-spin hit rate = 1 - (1-1/poolSize^2)^reels roughly
+  // Use a cleaner approximation: prob at least one symbol appears >=2 times
+  const approxHit=(1-Math.pow(1-1/poolSize,g.reels*g.reels))*100;
+  const jackpotOdds=(1/Math.pow(poolSize,g.reels)*100).toExponential(2)+'%';
+
+  // Payline descriptions
+  const plDescs=[
+    {n:1,color:'#FFD700',desc:'Middle row — straight across'},
+    {n:2,color:'#00ccff',desc:'Top row — straight across'},
+    {n:3,color:'#ff4488',desc:'Bottom row — straight across'},
+    {n:4,color:'#00ff99',desc:'Zigzag — top → mid → bottom'},
+    {n:5,color:'#dd00ff',desc:'Zigzag — bottom → mid → top'},
+  ];
+
+  let html='';
+
+  // Win rate stats
+  html+=`<div class="pt-section">📊 WIN RATES (PER SPIN)</div>
+  <div class="pt-winrate">
+    <div class="pt-wr-item"><div class="pt-wr-val">${(approxHit).toFixed(1)}%</div><div class="pt-wr-lbl">ANY WIN (LINE 1)</div></div>
+    <div class="pt-wr-item"><div class="pt-wr-val">${jackpotOdds}</div><div class="pt-wr-lbl">JACKPOT ODDS</div></div>
+    <div class="pt-wr-item"><div class="pt-wr-val">${poolSize}</div><div class="pt-wr-lbl">SYMBOL POOL SIZE</div></div>
+    <div class="pt-wr-item"><div class="pt-wr-val">${g.reels}</div><div class="pt-wr-lbl">REELS</div></div>
+  </div>`;
+
+  // Symbol paytable
+  html+=`<div class="pt-section">🎰 SYMBOL PAYTABLE (multiplier × BET/LINE)</div>
+  <table class="pt-table">
+    <tr><th>SYM</th><th>NAME</th><th>RARITY</th><th>2× MATCH</th><th>3× MATCH</th><th>4×</th><th>5×</th><th>6×</th></tr>`;
+  uniq.forEach(sym=>{
+    const pt=PAYTABLE[sym];
+    if(!pt)return;
+    const rar=SYM_RARITY[sym]||'c';
+    const f=(freq[sym]||0);
+    const pct=((f/poolSize)*100).toFixed(0);
+    const m=pt.m;
+    html+=`<tr>
+      <td class="pt-sym">${sym}</td>
+      <td class="pt-name">${pt.name}<br><span style="font-size:.6rem;color:rgba(255,255,255,.25);">${pct}% of pool</span></td>
+      <td><span class="pt-rare ${rar}">${SYM_RARITY_LABEL[rar]}</span></td>
+      <td class="pt-mult">${m[0]||'-'}×</td>
+      <td class="pt-mult">${m[1]||'-'}×</td>
+      <td class="pt-mult" style="color:${m[2]?'#00ccff':'#333'}">${m[2]||'-'}×</td>
+      <td class="pt-mult" style="color:${m[3]?'#dd00ff':'#333'}">${m[3]||'-'}×</td>
+      <td class="pt-mult" style="color:${m[3]?'#ff1a44':'#333'}">${g.reels>=6&&m[3]?m[3]+'×':'-'}</td>
+    </tr>`;
+  });
+  html+='</table>';
+
+  // Paylines
+  html+=`<div class="pt-section">📐 PAYLINES (Active = highlighted on reels)</div>
+  <div class="pt-lines-info">`;
+  plDescs.forEach(pl=>{
+    html+=`<div><b style="color:${pl.color}">Line ${pl.n}:</b> ${pl.desc}</div>`;
+  });
+  html+=`<div style="margin-top:6px;color:rgba(255,255,255,.3);">Wins pay left-to-right from reel 1. Minimum 2 matching symbols to win.</div>`;
+  html+=`</div>`;
+
+  // Free spins note
+  html+=`<div class="pt-section">🎁 FREE SPINS & BONUSES</div>
+  <div class="pt-lines-info">
+    <b>🦣 YETI (Legendary):</b> Matching 2+ Yetis awards <b style="color:#00ffee">5 FREE SPINS</b> at current bet.<br>
+    <b>❄️ Snowflake:</b> 3+ awards <b style="color:#00ccff">3 FREE SPINS</b>.<br>
+    <b>💎 Diamond / 👑 Crown:</b> Matching all reels triggers <b style="color:#FFD700">JACKPOT BONUS</b> — full paytable multiplier × lines bet.<br>
+    <b>Pool size matters:</b> More symbols = longer odds but higher jackpots. This machine has <b style="color:${g.accent}">${poolSize} symbols</b> vs. 14 on entry-level machines.
+  </div>`;
+
+  document.getElementById('ptContent').innerHTML=html;
+  modal.classList.add('open');
+}
+function closePT(){document.getElementById('ptModal').classList.remove('open');}
+document.getElementById('ptModal').addEventListener('click',e=>{if(e.target===document.getElementById('ptModal'))closePT();});
+
+function getLines(gid){return parseInt(document.getElementById('lines-'+gid).value)||5;}
+function getBet(gid){return parseInt(document.getElementById('bet-'+gid).value)||2;}
+function getTot(gid){return getLines(gid)*getBet(gid);} // credits only
+
+
+function drawPaylines(gid, winLine=-1){
+  const lines=getLines(gid);
+  const g=G.find(x=>x.id===gid);
+  const nReels=g.reels;
+  const svg=document.getElementById('plsvg-'+gid);
+  if(!svg)return;
+
+  // Use a 1000×300 viewBox (100% wide, 3 rows × 100 units each)
+  // Reel centers are evenly distributed across the full width with padding
+  const VW=1000, VH=300, rowH=100, padX=20;
+  const slotW=(VW-2*padX)/nReels;
+  const colCenters=[];
+  for(let i=0;i<nReels;i++) colCenters.push(padX+i*slotW+slotW/2);
+
+  let html=`<defs><filter id="glow${gid}"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
+
+  for(let li=0;li<5;li++){
+    const pd=PAYLINE_DEFS[li];
+    const active=li<lines;
+    const winning=winLine===li;
+    const sw=winning?8:active?4:1;
+    const op=winning?1:active?0.75:0.1;
+    const pts=colCenters.map((cx,ci)=>`${cx.toFixed(0)},${(pd.rows[Math.min(ci,nReels-1)]*rowH+rowH/2).toFixed(0)}`).join(' ');
+    html+=`<polyline points="${pts}" fill="none" stroke="${pd.color}" stroke-width="${sw}" opacity="${op}" stroke-linecap="round" stroke-linejoin="round"${winning?` filter="url(#glow${gid})"`:''}/>` ;
+  }
+  svg.setAttribute('viewBox',`0 0 ${VW} ${VH}`);
+  svg.setAttribute('preserveAspectRatio','none');
+  svg.innerHTML=html;
+}
+
+function updateTot(gid){
+  const t=getTot(gid);
+  document.getElementById('tot-'+gid).textContent=t+' cr';
+  const lines=getLines(gid);
+  // Left/right numeric labels (side columns) — keep for redundancy
+  [1,2,3,4,5].forEach(n=>{
+    const el=document.getElementById('pl'+n+'-'+gid);
+    if(el) el.className='rl-num'+(n<=lines?' active':'');
+  });
+  // Draw SVG paylines
+  drawPaylines(gid);
+}
+/* Wire controls once machines are in DOM */
+function wireYetiControls(gid){
+  ['lines-','bet-'].forEach(pfx=>{
+    const el=document.getElementById(pfx+gid);
+    if(el)el.addEventListener('change',()=>updateTot(gid));
+  });
+  updateTot(gid);
+}
+
+/* Evaluate a single payline (array of symbols) against paytable */
+function evalLine(line){
+  // Check each symbol as potential match starting from left
+  let best={sym:null,count:0,mult:0};
+  const syms=Object.keys(PAYTABLE);
+  for(const sym of syms){
+    let cnt=0;
+    for(const s of line){if(s===sym)cnt++;else break;}
+    if(cnt<2)continue;
+    const pt=PAYTABLE[sym];
+    const mi=Math.min(cnt,pt.m.length)-1+(cnt<3?0:cnt-3);
+    const mult=pt.m[Math.min(cnt-2,pt.m.length-1)]||0;
+    if(mult>best.mult){best={sym,count:cnt,mult,name:pt.name};}
+  }
+  return best;
+}
+
 function doPull(gid){
   const gs=GS[gid];
   if(gs.spinning)return;
   const g=G.find(x=>x.id===gid);
-  gs.spinning=true;gs.spins++;
+  if(!g)return;
+  const lines=getLines(gid);
+  const bet=getBet(gid);
+  const totalBet=getTot(gid);
+  if(GBAL[gid]<totalBet){
+    document.getElementById('pr-'+gid).innerHTML='<span style="color:#f55;">Not enough credits!</span>';
+    return;
+  }
+  GBAL[gid]-=totalBet;
+  gs.spinning=true;
+  gs.spins++;
+  document.getElementById('spincnt-'+gid).textContent=gs.spins;
+  document.getElementById('bal-'+gid).textContent=GBAL[gid].toFixed(0);
   const btn=document.getElementById('pull-'+gid);
   btn.disabled=true;
-  document.getElementById('pr-'+gid).innerHTML=`<span style="color:#555;">Spinning…</span>`;
+  document.getElementById('pr-'+gid).innerHTML='<span style="color:#888;">Spinning…</span>';
 
-  const syms=SYMBOLS_BY_TIER[gid];
-  // Determine outcome first
-  const finals=[];
-  for(let i=0;i<g.reels;i++) finals.push(syms[Math.floor(Math.random()*syms.length)]);
+  const pool=SYMBOLS_BY_TIER[gid]||SYMBOLS_BY_TIER['025'];
 
-  // 5% jackpot: all match
-  if(Math.random()<0.05){const s=syms[Math.floor(Math.random()*syms.length)];finals.fill(s);}
-  // 22% near-miss: all but last match
-  else if(Math.random()<0.22){const s=syms[Math.floor(Math.random()*syms.length)];for(let i=0;i<g.reels-1;i++)finals[i]=s;}
+  // Build 3-row outcome grid
+  const grid=[[],[],[]];
+  for(let col=0;col<g.reels;col++){
+    for(let row=0;row<3;row++)
+      grid[row].push(pool[Math.floor(Math.random()*pool.length)]);
+  }
+  const finals=grid[1]; // middle row = line 1
 
-  // Rebuild each strip with final symbol at position 12
+  // Fill each reel strip with random padding + outcome at positions 10,11,12
   for(let i=0;i<g.reels;i++){
     const el=document.getElementById('rs-'+gid+'-'+i);
+    if(!el)continue;
     let cells='';
     for(let j=0;j<30;j++){
-      if(j===12) cells+=`<div class="reel-cell">${finals[i]}</div>`;
-      else cells+=`<div class="reel-cell">${syms[Math.floor(Math.random()*syms.length)]}</div>`;
+      const sym = j===10?grid[0][i]:j===11?finals[i]:j===12?grid[2][i]
+                       :pool[Math.floor(Math.random()*pool.length)];
+      cells+=`<div class="reel-cell">${sym}</div>`;
     }
     el.innerHTML=cells;
     el.style.transition='none';
     el.style.top='0px';
   }
 
-  // Animate spin for each reel
-  let done=0;
-  for(let i=0;i<g.reels;i++){
-    const duration=800+i*350;
-    const el=document.getElementById('rs-'+gid+'-'+i);
+  // Spin animation — each reel stops sequentially
+  let stoppedCount=0;
+  const nReels=g.reels;
+
+  // Guaranteed fallback: if any reel fails, force finish after max duration+500ms
+  const fallback=setTimeout(()=>{
+    if(gs.spinning){
+      gs.spinning=false;
+      btn.disabled=false;
+      try{finishPull(gid,finals,g,grid,lines,bet,totalBet);}catch(e){
+        document.getElementById('pr-'+gid).innerHTML='<span style="color:#f55;">Error — try again</span>';
+      }
+    }
+  }, 700+nReels*300+800);
+
+  for(let i=0;i<nReels;i++){
+    const reelIdx=i;
+    const duration=700+reelIdx*300+Math.floor(Math.random()*150);
+    const el=document.getElementById('rs-'+gid+'-'+reelIdx);
+    if(!el){stoppedCount++;continue;}
     let pos=0;
-    const speed=18+i*3;
+    const speed=18+reelIdx*2;
     const iv=setInterval(()=>{pos-=speed;el.style.top=pos+'px';},16);
     setTimeout(()=>{
       clearInterval(iv);
-      sndReelStop(i);
-      // Snap to final position (cell 12 centered)
-      el.style.transition='top .25s cubic-bezier(.15,.8,.25,1)';
-      el.style.top=-(12*80)+'px';
-      setTimeout(()=>{el.style.transition='none';},260);
-      done++;
-      if(done===g.reels) finishPull(gid,finals,g);
+      try{sndReelStop(reelIdx);}catch(e){}
+      el.style.transition='top .2s cubic-bezier(.1,.9,.2,1)';
+      el.style.top=-(10*80)+'px';
+      setTimeout(()=>{el.style.transition='none';},220);
+      stoppedCount++;
+      if(stoppedCount===nReels){
+        clearTimeout(fallback);
+        setTimeout(()=>{
+          try{finishPull(gid,finals,g,grid,lines,bet,totalBet);}
+          catch(e){
+            gs.spinning=false;
+            btn.disabled=false;
+            document.getElementById('pr-'+gid).innerHTML='<span style="color:#f55;">Error — try again</span>';
+          }
+        },250);
+      }
     },duration);
   }
 }
 
-function finishPull(gid,finals,g){
+function finishPull(gid,finals,g,grid,lines,bet,totalBet){
   const gs=GS[gid];
   gs.spinning=false;
   document.getElementById('pull-'+gid).disabled=false;
   const pr=document.getElementById('pr-'+gid);
+
+  /* Evaluate paylines — main(row1) + up to lines-1 additional diagonal/horizontal */
+  const paylines=[
+    grid[1],                                           // line 1: middle row
+    grid[0],                                           // line 2: top row
+    grid[2],                                           // line 3: bottom row
+    grid.map((_,col)=>grid[col%3][col]),               // line 4: diagonal down
+    grid.map((_,col)=>grid[(col+2)%3][col]),           // line 5: diagonal up
+  ].slice(0,lines);
+
+  let totalWin=0,bestResult=null;
+  paylines.forEach((pl,li)=>{
+    const r=evalLine(pl.slice(0,g.reels));
+    if(r.count>=2){
+      const win=r.mult*bet; // credits only — mult × bet-per-line
+      totalWin+=win;
+      if(!bestResult||r.mult>bestResult.mult) bestResult={...r,win,line:li+1};
+    }
+  });
+
   const allMatch=finals.every(v=>v===finals[0]);
-  const nearMatch=finals.slice(0,-1).every(v=>v===finals[0])&&finals[finals.length-1]!==finals[0];
-  // Count how many from the left match
-  let matchRun=1;
-  for(let i=1;i<finals.length;i++){if(finals[i]===finals[0])matchRun++;else break;}
+  const nearMatch=g.reels>=3&&finals.slice(0,-1).every(v=>v===finals[0])&&finals[finals.length-1]!==finals[0];
+
+  GBAL[gid]+=totalWin;
+  document.getElementById('bal-'+gid).textContent=GBAL[gid].toFixed(0);
 
   if(allMatch){
-    /* ===== JACKPOT ===== */
-    const sym=finals[0].repeat(g.reels);
-    const payout='$'+g.total;
-    pr.innerHTML=`<span style="color:#FFD700;font-size:1rem;font-weight:700;text-shadow:0 0 20px #FFD700,0 0 40px #FFD700;animation:pp 0.4s ease infinite;">� JACKPOT! ${sym}</span>`;
-    sndJackpot();
-    flashScreen('rgba(255,215,0,0.6)',300);
-    setTimeout(()=>flashScreen('rgba(255,255,255,0.5)',120),350);
-    setTimeout(()=>flashScreen('rgba(255,215,0,0.5)',200),600);
-    spawnConfetti(220,['#FFD700','#FFA500','#fff','#ff1a44','#00ff66','#00ccff','#dd00ff']);
-    sndCoin();
-    setTimeout(()=>showWin('� JACKPOT! '+sym,' All '+g.reels+' reels matched on '+g.name+'! Prize: '+payout+' annuity. FREE ticket issued!'),500);
-    apiBuyTicket(gid,1);
+    /* ===== YETI JACKPOT ===== */
+    const sym=finals[0];
+    const symInfo=PAYTABLE[sym]||{name:sym,m:DEFAULT_MULT};
+    const jackpotMult=symInfo.m[Math.min(g.reels-2,symInfo.m.length-1)];
+    const jackpotWin=(jackpotMult*bet*(lines||1)).toFixed(0);
+    pr.innerHTML=`<span style="color:#FFD700;font-size:.95rem;font-weight:700;text-shadow:0 0 20px #FFD700;">🏆 JACKPOT! ${sym.repeat(Math.min(g.reels,4))} ×${jackpotMult} = +${jackpotWin} cr</span>`;
+    try{sndJackpot();}catch(e){}
+    try{flashScreen('rgba(255,215,0,0.65)',300);
+      setTimeout(()=>flashScreen('rgba(255,255,255,0.6)',120),360);
+      setTimeout(()=>flashScreen('rgba(255,215,0,0.5)',200),620);}catch(e){}
+    try{spawnConfetti(240,['#FFD700','#FFA500','#fff','#ff1a44','#00ff66','#00ccff','#dd00ff']);}catch(e){}
+    try{sndCoin();}catch(e){}
+    setTimeout(()=>{
+      try{showWin('🏆 JACKPOT! '+sym.repeat(Math.min(g.reels,4)),'All '+g.reels+' reels matched! ×'+jackpotMult+' = '+jackpotWin+' credits! Congratulations!');}catch(e){}
+    },500);
+  } else if(totalWin>0&&bestResult){
+    /* ===== LINE WIN ===== */
+    const isYeti=bestResult.sym==='🦣';
+    pr.innerHTML=`<span style="color:${isYeti?'#00ffee':'#00ff99'};font-size:.82rem;text-shadow:0 0 8px ${isYeti?'#00ffee':'#00ff99'}">${isYeti?'🦣 YETI':'🎊'} Line ${bestResult.line}: ${bestResult.sym.repeat(Math.min(bestResult.count,4))} ×${bestResult.mult} = +${totalWin} cr</span>`;
+    try{sndSmallWin();}catch(e){}
+    try{sndCoin();}catch(e){}
+    try{flashScreen(isYeti?'rgba(0,255,238,0.28)':'rgba(0,255,100,0.22)',200);}catch(e){}
+    try{spawnConfetti(isYeti?120:55,isYeti?['#00ffee','#FFD700','#fff','#00ccff']:['#00ff99','#FFD700','#fff']);}catch(e){}
+    try{drawPaylines(gid, bestResult.line-1);setTimeout(()=>drawPaylines(gid),2000);}catch(e){}
+    // Free spins: Yeti 2+ = 5 free spins, Snowflake 3+ = 3 free spins
+    if(bestResult.sym==='🦣'&&bestResult.count>=2){
+      gs.freeSpins+=5;
+      setTimeout(()=>{
+        document.getElementById('pr-'+gid).innerHTML+=` <span style="color:#00ffee;font-size:.75rem;">🎁 +5 FREE SPINS!</span>`;
+        setTimeout(()=>triggerFreeSpins(gid),1200);
+      },600);
+    } else if(bestResult.sym==='❄️'&&bestResult.count>=3){
+      gs.freeSpins+=3;
+      setTimeout(()=>{
+        document.getElementById('pr-'+gid).innerHTML+=` <span style="color:#00ccff;font-size:.75rem;">❄️ +3 FREE SPINS!</span>`;
+        setTimeout(()=>triggerFreeSpins(gid),1200);
+      },600);
+    }
   } else if(nearMatch){
     /* ===== NEAR MISS ===== */
-    const matchSym=finals[0];
-    pr.innerHTML=`<span style="color:#ff9900;font-size:.88rem;text-shadow:0 0 8px #ff9900;">😱 SO CLOSE! ${matchSym.repeat(g.reels-1)} — one away from jackpot!</span>`;
-    sndNear();
-    flashScreen('rgba(255,100,0,0.3)',150);
-    // Shake the last reel
+    pr.innerHTML=`<span style="color:#ff9900;font-size:.82rem;text-shadow:0 0 8px #ff9900;">😱 SO CLOSE! ${finals[0].repeat(g.reels-1)} — one away!</span>`;
+    try{sndNear();}catch(e){}
+    try{flashScreen('rgba(255,100,0,0.28)',150);}catch(e){}
     const lr=document.getElementById('reel-'+gid+'-'+(g.reels-1));
     let s=0;const sv=setInterval(()=>{if(lr)lr.style.transform=`translateX(${s%2?-5:5}px)`;s++;if(s>10){if(lr)lr.style.transform='';clearInterval(sv);}},45);
-  } else if(matchRun>=2){
-    /* ===== PARTIAL WIN ===== */
-    const fakePrize=['$25','$50','$100','$250','$500'][Math.min(matchRun-2,4)];
-    pr.innerHTML=`<span style="color:#00ff99;font-size:.85rem;text-shadow:0 0 6px #00ff99;">🎊 ${matchRun} in a row! Bonus: ${fakePrize} credit!</span>`;
-    sndSmallWin();
-    sndCoin();
-    flashScreen('rgba(0,255,100,0.25)',200);
-    spawnConfetti(60,['#00ff99','#FFD700','#fff','#00ccff']);
   } else {
     /* ===== NO WIN ===== */
-    const msgs=['Keep spinning! Luck builds!','Almost there — try again!','The jackpot is warming up!','One more pull could change everything!','Fortune favors the bold!'];
+    const msgs=['Keep spinning! The Yeti awaits…','❄️ Cold reels — try again!','The Yeti is hiding…','One more pull!','Fortune favors the bold!'];
     pr.innerHTML=`<span style="color:#333;font-size:.75rem;">${msgs[gs.spins%msgs.length]}</span>`;
   }
+}
+
+/* ===== FREE SPINS ENGINE ===== */
+function triggerFreeSpins(gid){
+  const gs=GS[gid];
+  if(gs.freeSpins<=0||gs.spinning)return;
+  const remaining=gs.freeSpins;
+  gs.freeSpins=0; // consume all now, fire sequentially
+  const pr=document.getElementById('pr-'+gid);
+  let fired=0;
+  function fireOne(){
+    if(fired>=remaining)return;
+    fired++;
+    pr.innerHTML=`<span style="color:#00ffee;font-size:.8rem;">🎁 FREE SPIN ${fired}/${remaining}</span>`;
+    // Free spin costs 0 credits — temporarily override GBAL check
+    const saved=GBAL[gid];
+    GBAL[gid]=99999;
+    doPull(gid);
+    GBAL[gid]=saved; // restore; doPull already subtracted 0 effectively since we pre-set high
+    // Re-add the bet cost that doPull deducted (free spin = free)
+    const cost=getTot(gid);
+    GBAL[gid]+=cost;
+    document.getElementById('bal-'+gid).textContent=GBAL[gid].toFixed(0);
+    // Queue next free spin after current spin animation finishes
+    const g=G.find(x=>x.id===gid);
+    const spinDur=700+g.reels*300+800;
+    setTimeout(()=>{if(fired<remaining)fireOne();},spinDur+400);
+  }
+  fireOne();
 }
 
 /* ===== API TICKET PURCHASE (REAL BACKEND) ===== */
@@ -1272,9 +2186,19 @@ pollStatus();
 
 /* Progress driven solely by real API data from pollStatus() */
 
-/* ===== CHARTS ===== */
+/* ===== TAB SYSTEM ===== */
 let chartsBuilt=false;
-function toggleCharts(){const b=document.getElementById('chartsBody');b.classList.toggle('open');if(b.classList.contains('open')&&!chartsBuilt){buildCharts();chartsBuilt=true;}}
+function switchMainTab(name){
+  ['floor','charts','about'].forEach(t=>{
+    document.getElementById('tab-'+t).classList.toggle('active',t===name);
+    document.getElementById('tabpanel-'+t).classList.toggle('active',t===name);
+  });
+  if(name==='charts'&&!chartsBuilt){
+    chartsBuilt=true;
+    setTimeout(buildCharts,60); // slight delay so panel is visible before canvas sizes
+  }
+}
+/* ===== CHARTS ===== */
 const labels=SIM.map(d=>'M'+d.month);
 let tierChart=null;
 function mkC(id,type,ds){return new Chart(document.getElementById(id).getContext('2d'),{type,data:{labels,datasets:ds},options:{responsive:true,animation:{duration:200},plugins:{legend:{labels:{color:'#444',font:{size:9}}}},scales:type!='doughnut'?{x:{ticks:{color:'#333',maxTicksLimit:10},grid:{color:'rgba(255,255,255,.02)'}},y:{ticks:{color:'#333'},grid:{color:'rgba(255,255,255,.02)'}}}:{}}});}
